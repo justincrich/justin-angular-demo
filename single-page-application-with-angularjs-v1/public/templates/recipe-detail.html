@@ -74,8 +74,6 @@
     </div>
     <div class="grid-20">
       <p>
-        <!-- TODO Add a directive to this input element to bind its value
-          to the recipe model's `prepTime` property. -->
         <input type="number" ng-model="recipe.prepTime" ng-value="recipe.prepTime">
       </p>
     </div>
@@ -90,8 +88,6 @@
     </div>
     <div class="grid-20">
       <p>
-        <!-- TODO Add a directive to this input element to bind its value
-          to the recipe model's `cookTime` property. -->
         <input type="number" ng-model="recipe.cookTime" ng-value="recipe.cookTime">
       </p>
     </div>
@@ -119,39 +115,29 @@
         <label> Amount </label>
       </p>
     </div>
-
-    <!-- TODO Add a directive to this div element so that it repeats
-      for each recipe ingredient to display. -->
     <div class="ingredient-row" ng-repeat="ingredient in recipe.ingredients">
       <div class="prefix-20 grid-30">
         <p>
-          <!-- TODO Add directives to this select element to bind its value
-            to the recipe ingredient model's `foodItem` property and to
-            populate the list with the food items from the database. -->
-          <select>
+          <select ng-model="ingredient.foodItem" ng-options="foodItem.name as foodItem.name for foodItem in foodItems">
             <option value="">Select Item</option>
           </select>
         </p>
       </div>
       <div class="grid-30">
         <p>
-          <!-- TODO Add a directive to this input element to bind its value
-            to the recipe ingredient model's `condition` property. -->
-          <input type="text">
+          <input type="text" ng-model="ingredient.condition" ng-value="ingredient.condition">
         </p>
       </div>
       <div class="grid-15">
         <p>
-          <!-- TODO Add a directive to this input element to bind its value
-            to the recipe ingredient model's `amount` property. -->
-          <input type="text">
+          <input type="text" ng-model="ingredient.amount" ng-value="ingredient.amount">
         </p>
       </div>
       <div class="grid-5 pad-top">
         <p class="flush-right">
           <!-- TODO Add a directive to this anchor element so that you can
             delete the recipe ingredient when the user clicks on the 'Delete' link. -->
-          <a class="no-action-link"> <img src="images/delete.svg" height="12px"> </a>
+          <a class="no-action-link" ng-click="deleteIngredient(ingredient)"> <img src="images/delete.svg" height="12px"> </a>
         </p>
       </div>
     </div>

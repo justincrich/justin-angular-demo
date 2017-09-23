@@ -23,7 +23,16 @@ angular.module('app')
     this.getFoodItems = ()=>{
       return new Promise((res,rej)=>{
         fetch(url+`api/fooditems`)
-          .then(response => res(response.json()))
+          .then(response =>res(response.json()))
+          // .then(json=>{
+          //   let outputObj = {};
+          //   for(let i in json){
+          //     let item = json[i];
+          //     outputObj[item._id] = item.name;
+          //   }
+          //
+          //   res(outputObj)
+          // })
       })
     }
 

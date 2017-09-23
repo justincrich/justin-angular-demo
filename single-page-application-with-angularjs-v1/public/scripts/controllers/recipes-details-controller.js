@@ -22,6 +22,13 @@
       $scope.recipe.category = $scope.categorySelected.name;
     }
 
+    $scope.deleteIngredient = (ingredient)=>{
+      console.log("heeeey",ingredient)
+      // dataService.deleteSingleRecipe(id).then(res=>{
+      //
+      // });
+    }
+
     dataService.getCategories().then(function(json){
       $scope.categories = json;
       //check if we are editing a recipe
@@ -36,9 +43,10 @@
 
     dataService.getFoodItems().then(function(json){
       $scope.foodItems = json;
-      console.log(json);
+      console.log(json)
       $scope.$apply()
     });
+
 
   })
 })();
