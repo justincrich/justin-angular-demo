@@ -1,13 +1,11 @@
 <div ng-controller="RecipeDetailController">
   <div class="grid-100 row controls">
     <div class="grid-50">
-      <h2 ng-show='recipe != null'>{{recipe.name}}</h2>
-      <h2 ng-show='recipe == null'>Add/Edit Recipe</h2>
+      <h2 ng-show='type === "update"'>{{recipe.name}}</h2>
+      <h2 ng-show='type === "new"'>Add/Edit Recipe</h2>
     </div>
     <div class="grid-50">
       <div class="flush-right">
-        <!-- TODO Add directives to both the "Save Recipe" and "Cancel"
-          buttons in order to handle user clicks. -->
         <button ng-click="saveRecipe()">Save Recipe</button>
         <button class="secondary" ng-click="cancelRecipe()">Cancel</button>
       </div>
@@ -22,8 +20,6 @@
     </div>
     <div class="grid-40">
       <p>
-        <!-- TODO Add a directive to this input element to bind its value
-          to the recipe model's `name` property. -->
         <input type="text" ng-value="recipe.name" ng-model="recipe.name">
       </p>
     </div>
@@ -43,7 +39,6 @@
     </div>
   </div>
   <div class="clear"></div>
-
   <div class="grid-100 row">
     <div class="grid-20">
       <p class="label-spacing">
@@ -52,9 +47,6 @@
     </div>
     <div class="grid-30">
       <p>
-        <!-- TODO Add directives to this select element to bind its value
-          to the recipe model's `category` property and to populate the list
-          with the categories from the database. -->
         <select
             ng-model="categorySelected"
             ng-options = "category.name for category in categories"
@@ -135,8 +127,6 @@
       </div>
       <div class="grid-5 pad-top">
         <p class="flush-right">
-          <!-- TODO Add a directive to this anchor element so that you can
-            delete the recipe ingredient when the user clicks on the 'Delete' link. -->
           <a class="no-action-link" ng-click="deleteIngredient(ingredient)"> <img src="images/delete.svg" height="12px"> </a>
         </p>
       </div>
@@ -144,15 +134,12 @@
 
     <div class="prefix-20 grid-80 add-row">
       <p>
-        <!-- TODO Add a directive to this button in order to handle
-          when the user clicks to add a new recipe ingredient. -->
-        <button>+ Add Another Ingredient</button>
+        <button ng-click="addIngredient()">+ Add Another Ingredient</button>
       </p>
     </div>
 
   </div>
   <div class="clear"></div>
-
   <div class="grid-100 row">
     <div class="grid-20">
       <p class="label-spacing">
@@ -164,31 +151,22 @@
         <label> Description </label>
       </p>
     </div>
-
-    <!-- TODO Add a directive to this div element so that it repeats
-      for each recipe step to display. -->
-    <div class="step-row">
+    <div class="step-row" ng-repeat="step in recipe.steps">
       <div class="prefix-20 grid-75">
         <p>
-          <!-- TODO Add a directive to this input element to bind its value
-            to the recipe step model's `description` property. -->
-          <input type="text">
+          <input type="text" ng-model="step.description" ng-value="step.description">
         </p>
       </div>
       <div class="grid-5 pad-top">
         <p class="flush-right">
-          <!-- TODO Add a directive to this anchor element so that you can
-            delete the recipe step when the user clicks on the 'Delete' link. -->
-          <a class="no-action-link"> <img src="images/delete.svg" height="12px"> </a>
+          <a class="no-action-link" ng-click="deleteStep($index)"> <img src="images/delete.svg" height="12px"> </a>
         </p>
       </div>
     </div>
 
     <div class="prefix-20 grid-80 add-row">
       <p>
-       <!-- TODO Add a directive to this button in order to handle
-         when the user clicks to add a new recipe step. -->
-       <button>+ Add Another Step</button>
+       <button ng-click="addStep()">+ Add Another Step</button>
       </p>
     </div>
 

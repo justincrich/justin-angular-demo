@@ -24,15 +24,6 @@ angular.module('app')
       return new Promise((res,rej)=>{
         fetch(url+`api/fooditems`)
           .then(response =>res(response.json()))
-          // .then(json=>{
-          //   let outputObj = {};
-          //   for(let i in json){
-          //     let item = json[i];
-          //     outputObj[item._id] = item.name;
-          //   }
-          //
-          //   res(outputObj)
-          // })
       })
     }
 
@@ -47,20 +38,38 @@ angular.module('app')
       return new Promise((res,rej)=>{
         fetch(url+`api/recipes/${id}`)
           .then(response => res(response.json()))
+
       })
     }
 
     //update recepie
-    this.updateSingleRecipe = (id)=>{
+    this.updateSingleRecipe = (recipe)=>{
       return new Promise((res,rej)=>{
-
+        console.log('update',recipe)
       })
     }
 
     //create recipe
     this.createRecipe = (recipe)=>{
       return new Promise((res,rej)=>{
-
+        console.log('create',recipe)
+        let init = {
+          method:'post',
+          body:JSON.stringify(recipe),
+          headers:{
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        };
+        fetch(url+`api/recipes`,init)
+        .then(response=>response.json())
+        .then(json=>{
+          console.log(json)
+          res(json)
+        })
+        .error(err=>{
+          console.error(err.message)
+        })
       })
     }
 

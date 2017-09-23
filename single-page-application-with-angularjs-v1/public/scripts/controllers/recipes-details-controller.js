@@ -1,32 +1,54 @@
 (function(){
   'use strict';
   angular.module('app')
-  .controller('RecipeDetailController',function ($scope,$routeParams,dataService){
-    //load only if we are opening a previously created item
+  .controller('RecipeDetailController',function ($scope,$routeParams,$location,dataService){
+
     if(typeof $routeParams.id != 'undefined'){
+      //load only if we are opening a previously created item
+      $scope.type = 'update';
       dataService.getSingleRecipe($routeParams.id).then(resp=>{
         $scope.recipe = resp;
         $scope.$apply();
       })
+    }else{
+      //create new recepie object if it's a new item
+      $scope.type = 'new';
+      $scope.recipe = {
+        ingredients:[],
+        steps:[]
+      }
     }
 
     $scope.saveRecipe = ()=>{
-      console.log('save');
+      if($scope.type === 'new'){
+        //create new
+        dataService.createRecipe($scope.recipe);
+
+      }else{
+        //save current
+        dataService.updateRecipe($scope.recipe);
+      }
     }
 
     $scope.cancelRecipe = ()=>{
-      console.log('cancel');
+      $location.path('/')
     }
 
     $scope.setCategory = ()=>{
       $scope.recipe.category = $scope.categorySelected.name;
     }
 
-    $scope.deleteIngredient = (ingredient)=>{
-      console.log("heeeey",ingredient)
-      // dataService.deleteSingleRecipe(id).then(res=>{
-      //
-      // });
+    $scope.deleteIngredient = function (ingredient){
+      let index = $scope.recipe.ingredients.findIndex(item =>{
+        return item.foodItem === ingredient.foodItem;
+      });
+      $scope.recipe.ingredients.splice(index,1);
+
+    }
+
+    $scope.addIngredient = function (){
+
+      $scope.recipe.ingredients.push({});
     }
 
     dataService.getCategories().then(function(json){
@@ -43,9 +65,16 @@
 
     dataService.getFoodItems().then(function(json){
       $scope.foodItems = json;
-      console.log(json)
       $scope.$apply()
     });
+
+    $scope.deleteStep = function(step){
+      console.log(step)
+      $scope.recipe.steps.splice(step,1);
+    };
+    $scope.addStep = function (){
+      $scope.recipe.steps.push({});
+    }
 
 
   })
