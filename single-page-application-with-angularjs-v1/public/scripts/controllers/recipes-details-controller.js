@@ -15,18 +15,31 @@
       $scope.type = 'new';
       $scope.recipe = {
         ingredients:[],
-        steps:[]
+        steps:[],
+        name:'',
+        description:'',
+        category:'',
+        prepTime:'',
+        cookTime:''
       }
     }
 
-    $scope.saveRecipe = ()=>{
+    $scope.saveRecipe = function(){
       if($scope.type === 'new'){
         //create new
-        dataService.createRecipe($scope.recipe);
+        dataService.createRecipe($scope.recipe)
+        .then((result)=>{
+          $location.path('/');
+          $scope.$apply();
+        });
 
       }else{
         //save current
-        dataService.updateRecipe($scope.recipe);
+        dataService.updateRecipe($scope.recipe)
+          .then(result=>{
+            $location.path('/');
+            $scope.$apply();
+          });
       }
     }
 
